@@ -4,22 +4,22 @@ const Form = ({ Addmeeting, JoinMeeting, join_function, join_value }) => {
 
   const [join, setjoin] = useState(false)
   const[sechedulepopup,setsechedulepopup]=useState(false)
-  const [scheduletime, setscheduletime] = useState()
-  const[secheduledate,setsecheduledate]=useState()
+  // const [scheduletime, setscheduletime] = useState()
+  // const[secheduledate,setsecheduledate]=useState()
  
   return (
     <>
       <button className="btn btn-danger mr-3 mt-3" onClick={()=>
       {
-         let hostpassword=prompt('Enter thr password')
-         if(hostpassword=="sandeep")
-         {
-          setsechedulepopup(!sechedulepopup)
-         }
-         else
-         {
-          alert("You are not a host")
-         }
+        //  let hostpassword=prompt('Enter thr password')
+        //  if(hostpassword=="sandeep")
+        //  {
+        //   setsechedulepopup(!sechedulepopup)
+        //  }
+        //  else
+        //  {
+        //   alert("You are not a host")
+        //  }
       }}>Schedule meeting</button>
       <div className="form d-flex justify-content-center align-items-center" style={{ "width": "100vw ", "height": "100vh", "flexDirection": "column" }} >
         <button className="btn btn-primary m-3" style={{ "height": "2.3rem", "borderRadius": "3rem", "width": "250px" }} onClick={Addmeeting}> New meeting</button>
@@ -39,7 +39,7 @@ const Form = ({ Addmeeting, JoinMeeting, join_function, join_value }) => {
         }
       </div>
 
-      {
+      {/* {
         sechedulepopup ?
         <div className="Schedule">
       <div className="schedule_popup pt-3 d-flex justify-content-center align-items-center" style={{"flexDirection":"column"}}>
@@ -69,7 +69,7 @@ const Form = ({ Addmeeting, JoinMeeting, join_function, join_value }) => {
       </div>
       </div>
       :""
-      }
+      } */}
     </>
   )
 };
