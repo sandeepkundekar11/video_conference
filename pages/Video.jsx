@@ -25,6 +25,9 @@ const Video = () => {
     const [sharedvideo, setsharevideo] = useState(false)         // used for sharepopup to show input popup
     const[shareurl,setshareurl]=useState("")                     // used for sharepopup to get url from input
     const[stopVideo,setstopVideo]=useState(true)                // used to replace share video to stop video
+    const[enable_audio,setenable_audio]=useState(false)
+    const[enable_video,setenable_video]=useState(false)
+    
     const GetUserInfo = () => {
         const data = myapi.getParticipantsInfo();
         setuserInfo(data)
@@ -48,7 +51,6 @@ const Video = () => {
             configOverwrite: {
                 startWithAudioMuted: true,
                 startWithVideoMuted: true,
-                enableCalendarIntegration: true
             },
 
             interfaceConfigOverwrite: {
@@ -131,9 +133,11 @@ const Video = () => {
                 meeting ?
                     <Toolbar audio={() => {
                         myapi.executeCommand('toggleAudio');
+                        setenable_audio(!enable_audio)
                     }}
                         video={() => {
                             myapi.executeCommand('toggleVideo');
+                            setenable_video(!enable_video)
                         }}
                         chat={() => {
                             myapi.executeCommand('toggleChat');
@@ -153,6 +157,8 @@ const Video = () => {
                             GetUserInfo()
                             setsharevideo(false)
                         }}
+                        audio_enable={enable_audio}
+                        video_enable={enable_video}
                     /> : ""
             }
 
