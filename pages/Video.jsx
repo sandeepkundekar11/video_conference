@@ -23,8 +23,8 @@ const Video = () => {
     let [myapi, setmyapi] = useState({})                            //used to set jitsi api
     const [userInfo, setuserInfo] = useState("")                  //used to store joined user information
     const [sharedvideo, setsharevideo] = useState(false)         // used for sharepopup to show input popup
-    const [shareurl, setshareurl] = useState("")                     // used for sharepopup to get url from input
-    const [stopVideo, setstopVideo] = useState(true)                // used to replace share video to stop video
+    const[shareurl,setshareurl]=useState("")                     // used for sharepopup to get url from input
+    const[stopVideo,setstopVideo]=useState(true)                // used to replace share video to stop video
     const GetUserInfo = () => {
         const data = myapi.getParticipantsInfo();
         setuserInfo(data)
@@ -52,49 +52,45 @@ const Video = () => {
             },
 
             interfaceConfigOverwrite: {
-                SHOW_JITSI_WATERMARK: false,
-                HIDE_DEEP_LINKING_LOGO: true,
-                SHOW_BRAND_WATERMARK: false,
-                SHOW_WATERMARK_FOR_GUESTS: false,
-                SHOW_JITSI_WATERMARK: false,
+                SHOW_JITSI_WATERMARK:false,
                 DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
                 TOOLBAR_ALWAYS_VISIBLE: true,
                 TOOLBAR_BUTTONS: [
-                    // 'camera',
-                    // 'chat',
-                    'closedcaptions',
-                    // 'desktop',
-                    // 'download',
-                    // 'embedmeeting',
-                    // 'etherpad',
-                    // 'feedback',
-                    'filmstrip',
-                    'fullscreen',
+                        // 'camera',
+                        // 'chat',
+                        'closedcaptions',
+                        // 'desktop',
+                        // 'download',
+                        // 'embedmeeting',
+                        // 'etherpad',
+                        // 'feedback',
+                        'filmstrip',
+                        'fullscreen',
                     //     'hangup',
                     //     'help',
                     //     'highlight',
-                    // 'invite',
+                        // 'invite',
                     //     'linktosalesforce',
                     //     'livestreaming',
                     //      'mute-everyone',
                     //     'mute-video-everyone',
-                    'participants-pane',
+                        'participants-pane',
                     //     'profile',
                     //     'raisehand',
-                    'recording',
-                    // 'security',
-                    'select-background',
-                    'settings',
-                    // 'shareaudio',
-                    // 'sharedvideo',
+                        'recording',
+                        // 'security',
+                        'select-background',
+                        'settings',
+                        // 'shareaudio',
+                        // 'sharedvideo',
                     //    'shortcuts',
-                    // 'stats',
+                        // 'stats',
 
                     //  '__end'
                 ],
 
             },
-
+            
             onload: function () {
                 setmeeting(!meeting)
             },
@@ -107,20 +103,25 @@ const Video = () => {
         <div className="d-flex justify-content-end align-items-end" style={{ "flexDirection": "column" }}>
             {
                 sharedvideo ?
-                    <SharePopup name={"Video"} Share={() => {
-                        if (shareurl.length < 2) {
+                    <SharePopup name={"Video"} Share={()=>
+                    {
+                        if(shareurl.length <2)
+                        {
                             alert("Enter correct url")
                         }
-                        else {
+                        else
+                        {
                             myapi.executeCommand('startShareVideo', shareurl);
                             setsharevideo(!sharedvideo)
                             setstopVideo(!stopVideo)
-
+                            
                         }
-                    }} scvalue={shareurl} scChange={(e) => {
-                        setshareurl(e.target.value)
-                    }} Cancel={() => {
-                        setsharevideo(!sharedvideo)
+                    }} scvalue={shareurl} scChange={(e)=>
+                    {
+                     setshareurl(e.target.value)
+                    }}  Cancel={()=>
+                    {
+                        setsharevideo(!sharedvideo)   
                     }} /> : ""
             }
             <div id="meeting" className="d-flex justify-content-center align-items-center w-100 h-100" style={{ "flexDirection": "column" }}>
@@ -194,12 +195,13 @@ const Video = () => {
                         }} share={() => {
                             setopup(!popup)
                             setsharevideo(!sharedvideo)
-
-                        }}
-                        stopvideofunction={() => {
+                           
+                        }} 
+                        stopvideofunction={()=>
+                        {
                             myapi.executeCommand('stopShareVideo');
                             setopup(!popup)
-                        }} stop={stopVideo} /> : ""
+                        }} stop={stopVideo}/> : ""
             }
 
 

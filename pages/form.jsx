@@ -3,24 +3,10 @@ import { use, useState } from "react";
 const Form = ({ Addmeeting, JoinMeeting, join_function, join_value }) => {
 
   const [join, setjoin] = useState(false)
-  const[sechedulepopup,setsechedulepopup]=useState(false)
-  // const [scheduletime, setscheduletime] = useState()
-  // const[secheduledate,setsecheduledate]=useState()
  
   return (
     <>
-      <button className="btn btn-danger mr-3 mt-3" onClick={()=>
-      {
-        //  let hostpassword=prompt('Enter thr password')
-        //  if(hostpassword=="sandeep")
-        //  {
-        //   setsechedulepopup(!sechedulepopup)
-        //  }
-        //  else
-        //  {
-        //   alert("You are not a host")
-        //  }
-      }}>Schedule meeting</button>
+      {/* <button className="btn btn-danger mr-3 mt-3">Schedule meeting</button> */}
       <div className="form d-flex justify-content-center align-items-center" style={{ "width": "100vw ", "height": "100vh", "flexDirection": "column" }} >
         <button className="btn btn-primary m-3" style={{ "height": "2.3rem", "borderRadius": "3rem", "width": "250px" }} onClick={Addmeeting}> New meeting</button>
         <button className="btn btn-primary m-3" style={{ "height": "2.3rem", "borderRadius": "3rem", "width": "250px" }} onClick={() => {
@@ -38,38 +24,6 @@ const Form = ({ Addmeeting, JoinMeeting, join_function, join_value }) => {
             </div> : ""
         }
       </div>
-
-      {/* {
-        sechedulepopup ?
-        <div className="Schedule">
-      <div className="schedule_popup pt-3 d-flex justify-content-center align-items-center" style={{"flexDirection":"column"}}>
-        <h5 className="text-white text-center pb-2">Only host can set the meeting</h5>
-        <div className="d-flex justify-content-center">
-          <input type="time" value={scheduletime}  onChange={(e)=>
-          {
-            setscheduletime(e.target.value)
-          }}/>
-          <input type="date" value={secheduledate} onChange={(e)=>
-          {
-            setsecheduledate(e.target.value)
-          }} />
-        </div>
-       <div className="d-flex mt-2 ">
-       <button className="btn btn-primary mr-2" onClick={()=>
-      {
-        
-        setsechedulepopup(!sechedulepopup)
-      }}>close</button>
-       <button className="btn btn-primary " onClick={()=>
-      {
-        console.log(scheduletime)
-        console.log(secheduledate)
-      }}>Schedule</button>
-       </div>
-      </div>
-      </div>
-      :""
-      } */}
     </>
   )
 };

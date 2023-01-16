@@ -1,5 +1,4 @@
 {
-  "homepage": "https://sandeepkundekar11.github.io/Video_conference",
   "name": "conferencing",
   "version": "0.1.0",
   "private": true,
@@ -7,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-   "predeploy": "npm run build",
-   "deploy": "gh-pages -d build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@jitsi/react-sdk": "^1.3.0",
