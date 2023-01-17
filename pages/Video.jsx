@@ -185,11 +185,7 @@ const Video = () => {
 
                         muteVideo={() => {
                             // myapi.executeCommand('muteEveryone', 'video');
-                            myapi.startRecording({
-                                openBridgeChannel: true,
-                                mode: "file",
-                                appData: null,
-                            });
+                          myapi.executeCommand('muteEveryone', 'audio');
                             setopup(!popup)
                         }}
                         invite={() => {
