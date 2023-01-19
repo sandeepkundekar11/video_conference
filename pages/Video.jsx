@@ -1,5 +1,5 @@
 import next from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Form from "./form";
 import Toolbar from "./Toolbar";
 import Popup from "./poup";
@@ -14,26 +14,24 @@ const Video = () => {
         }
         return result;
     }
-
-
+    let [myapi, setmyapi] = useState({})                            //used to set jitsi api
+    const [record, setrecord] = useState(false)
+    const [modarator, setmodarator] = useState(true)
     const [link, setlink] = useState(generateString(9).trim().toLocaleLowerCase())  //use to generate random invite code
     const [meeting, setmeeting] = useState(false)                 //to set toolbar
     const [popup, setopup] = useState(false)                      //to set popup
     const [joincode, setjoincode] = useState("")                   // used in form  to join meeting from invitation code
-    let [myapi, setmyapi] = useState({})                            //used to set jitsi api
+
     const [userInfo, setuserInfo] = useState("")                  //used to store joined user information
     const [sharedvideo, setsharevideo] = useState(false)         // used for sharepopup to show input popup
-    const[shareurl,setshareurl]=useState("")                     // used for sharepopup to get url from input
-    const[stopVideo,setstopVideo]=useState(true)                // used to replace share video to stop video
-    const[enable_audio,setenable_audio]=useState(false)
-    const[enable_video,setenable_video]=useState(false)
-    
-    const GetUserInfo = () => {
-        const data = myapi.getParticipantsInfo();
-        setuserInfo(data)
-    }
+    const [shareurl, setshareurl] = useState("")                     // used for sharepopup to get url from input
+    const [stopVideo, setstopVideo] = useState(true)                // used to replace share video to stop video
+    const [enable_audio, setenable_audio] = useState(false)
+    const [enable_video, setenable_video] = useState(false)
 
-    console.log(userInfo)
+    useEffect(() => {
+    })
+    // console.log(userInfo)
 
     const Start_meeting = (given_Name) => {
         const domain = 'meet.jit.si';
@@ -41,61 +39,39 @@ const Video = () => {
         const options = {
             roomName: given_Name,
             width: '100%',
-            height: 760,
+            height: 740,
             parentNode: document.querySelector('#meeting'),
             userInfo: {
                 email: 'email@jitsiexamplemail.com',
-                displayName: ""
+                displayName: ''
             },
 
             configOverwrite: {
                 startWithAudioMuted: true,
                 startWithVideoMuted: true,
+                prejoinPageEnabled: true
             },
 
             interfaceConfigOverwrite: {
-                SHOW_JITSI_WATERMARK:false,
+                SHOW_JITSI_WATERMARK: false,
                 DISABLE_DOMINANT_SPEAKER_INDICATOR: true,
                 TOOLBAR_ALWAYS_VISIBLE: true,
                 TOOLBAR_BUTTONS: [
-                        // 'camera',
-                        // 'chat',
-                        'closedcaptions',
-                        // 'desktop',
-                        // 'download',
-                        // 'embedmeeting',
-                        // 'etherpad',
-                        // 'feedback',
-                        'filmstrip',
-                        'fullscreen',
-                    //     'hangup',
-                    //     'help',
-                    //     'highlight',
-                        // 'invite',
-                    //     'linktosalesforce',
-                    //     'livestreaming',
-                    //      'mute-everyone',
-                    //     'mute-video-everyone',
-                        'participants-pane',
-                    //     'profile',
-                    //     'raisehand',
-                        'recording',
-                        // 'security',
-                        'select-background',
-                        'settings',
-                        // 'shareaudio',
-                        // 'sharedvideo',
-                    //    'shortcuts',
-                        // 'stats',
-
-                    //  '__end'
+                    'closedcaptions',
+                    'filmstrip',
+                    'fullscreen',
+                    'participants-pane',
+                    'select-background',
+                    'settings'
                 ],
 
             },
-            
+
+
             onload: function () {
                 setmeeting(!meeting)
-            },
+
+            }
 
         };
         setmyapi(new JitsiMeetExternalAPI(domain, options))
@@ -105,25 +81,20 @@ const Video = () => {
         <div className="d-flex justify-content-end align-items-end" style={{ "flexDirection": "column" }}>
             {
                 sharedvideo ?
-                    <SharePopup name={"Video"} Share={()=>
-                    {
-                        if(shareurl.length <2)
-                        {
+                    <SharePopup name={"Video"} Share={() => {
+                        if (shareurl.length < 2) {
                             alert("Enter correct url")
                         }
-                        else
-                        {
+                        else {
                             myapi.executeCommand('startShareVideo', shareurl);
                             setsharevideo(!sharedvideo)
                             setstopVideo(!stopVideo)
-                            
+
                         }
-                    }} scvalue={shareurl} scChange={(e)=>
-                    {
-                     setshareurl(e.target.value)
-                    }}  Cancel={()=>
-                    {
-                        setsharevideo(!sharedvideo)   
+                    }} scvalue={shareurl} scChange={(e) => {
+                        setshareurl(e.target.value)
+                    }} Cancel={() => {
+                        setsharevideo(!sharedvideo)
                     }} /> : ""
             }
             <div id="meeting" className="d-flex justify-content-center align-items-center w-100 h-100" style={{ "flexDirection": "column" }}>
@@ -154,18 +125,17 @@ const Video = () => {
                             setmeeting(!meeting)
                             setopup(false)
                             myapi.dispose();
-                            GetUserInfo()
+                            setenable_audio(false)
+                            setenable_video(false)
                             setsharevideo(false)
                         }}
                         audio_enable={enable_audio}
                         video_enable={enable_video}
                     /> : ""
             }
-
             <Form
                 Addmeeting={() => {
                     Start_meeting(link)
-
                 }}
                 join_value={joincode}
 
@@ -174,6 +144,7 @@ const Video = () => {
                 }}
                 JoinMeeting={() => {
                     Start_meeting(joincode)
+                    setmodarator(false)
                     setjoincode("")
                 }} />
             {
@@ -184,8 +155,7 @@ const Video = () => {
                     }}
 
                         muteVideo={() => {
-                            // myapi.executeCommand('muteEveryone', 'video');
-                          myapi.executeCommand('muteEveryone', 'audio');
+                            myapi.executeCommand('muteEveryone', 'audio');
                             setopup(!popup)
                         }}
                         invite={() => {
@@ -197,18 +167,41 @@ const Video = () => {
                         }} share={() => {
                             setopup(!popup)
                             setsharevideo(!sharedvideo)
-                           
-                        }} 
-                        stopvideofunction={()=>
-                        {
+                        }}
+                        stopvideofunction={() => {
                             myapi.executeCommand('stopShareVideo');
                             setopup(!popup)
-                        }} stop={stopVideo}/> : ""
+                        }} stop={stopVideo}
+
+                        Start_recording={() => {
+                            myapi.executeCommand('startRecording', {
+                                mode: 'local', //recording mode, either `local`, `file` or `stream`.
+                                onlySelf: false,  //Whether to only record the local streams. Only applies to `local` recording mode.
+                                shouldShare: false, //whether the recording should be shared with the participants or not. Only applies to certain jitsi meet deploys.
+                            });
+                            setrecord(!record)
+                            setopup(!popup)
+                        }} Stop_recording={() => {
+                            myapi.stopRecording('local')
+                            setrecord(!record)
+                            setopup(!popup)
+                        }} start_stop={record}
+                        host={modarator} /> : ""
             }
 
 
+            {/* {
+                modarator ?
+                    <div className="recorder_popup">
+                        <div>
+                            <h3>Start the Recording</h3>
+                            <button className="btn btn-primaty" onClick={()=>
+                            {
 
-
+                            }}>start</button>
+                        </div>
+                    </div> : ""
+            } */}
         </div>
     )
 }
