@@ -136,6 +136,7 @@ const Video = () => {
             <Form
                 Addmeeting={() => {
                     Start_meeting(link)
+                    setmodarator(true)
                 }}
                 join_value={joincode}
 
@@ -144,7 +145,6 @@ const Video = () => {
                 }}
                 JoinMeeting={() => {
                     Start_meeting(joincode)
-                    setmodarator(false)
                     setjoincode("")
                 }} />
             {
