@@ -1,6 +1,6 @@
 *
 {
-    overflow: hidden;
+    overflow-y: hidden;
 }
 .tool
 {
@@ -37,7 +37,7 @@
     margin-top: -25rem; */
     background-color: black;
     margin-right:3rem;
-    height: 30vh;
+    height: auto;
     width: 240px;
 }
 .popup >button
